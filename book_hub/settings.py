@@ -1,4 +1,6 @@
 from pathlib import Path
+from datetime import timedelta
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -72,6 +74,24 @@ DATABASES = {
 }
 
 AUTH_USER_MODEL = 'auth_app.User'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(hours=1),  # Set access token lifetime to 1 hour
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),  # Optional: Set refresh token lifetime to 1 day
+    'ROTATE_REFRESH_TOKENS': False,  # Optional: Set to True if you want to rotate refresh tokens
+    'BLACKLIST_AFTER_ROTATION': True,  # Optional: Set to True if you want to blacklist old refresh tokens after rotation
+    'ALGORITHM': 'HS256',  # Optional: Choose the algorithm to sign tokens
+    'SIGNING_KEY': 'your-secret-key',  # Optional: Use your secret key here
+    'AUTH_HEADER_TYPES': ('Bearer',),  # Optional: Define the authentication header type
+    'USER_ID_FIELD': 'id',  # Optional: Define the user ID field
+    'USER_ID_CLAIM': 'user_id',  # Optional: Define the claim for user ID
+}
 
 
 # Password validation
