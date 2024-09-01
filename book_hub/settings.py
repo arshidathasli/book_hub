@@ -30,6 +30,8 @@ INSTALLED_APPS = [
     'auth_app',
     'book_app',
     'rest_framework',
+    'rest_framework.authtoken',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -40,6 +42,15 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+]
+
+CORS_ALLOW_ALL_ORIGINS = True  
+
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000',  # React frontend
+    'http://127.0.0.1:3000',
+    "http://your-frontend-domain.com",
 ]
 
 ROOT_URLCONF = 'book_hub.urls'
@@ -82,7 +93,7 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(hours=1),  # Set access token lifetime to 1 hour
+    'ACCESS_TOKEN_LIFETIME': timedelta(hours=24),  # Set access token lifetime to 1 hour
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),  # Optional: Set refresh token lifetime to 1 day
     'ROTATE_REFRESH_TOKENS': False,  # Optional: Set to True if you want to rotate refresh tokens
     'BLACKLIST_AFTER_ROTATION': True,  # Optional: Set to True if you want to blacklist old refresh tokens after rotation
