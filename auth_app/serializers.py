@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model, authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
+from auth_app.models import User  
+
 
 # Serializer for user signup
 class UserSignupSerializer(serializers.ModelSerializer):
@@ -106,3 +108,10 @@ class UserListSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()
         fields = ('id', 'email', 'name', 'role', 'is_active')
+
+
+#Serializer for editing self profile
+class SelfProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'email', 'name', 'role']  # Add fields as necessary

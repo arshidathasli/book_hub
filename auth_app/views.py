@@ -7,10 +7,12 @@ from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import get_user_model
 from django.db.models import Q
+from rest_framework import generics, status
+
 from .models import User
 from .serializers import (
     UserSignupSerializer, UserLoginSerializer, ProfileUpdateSerializer, 
-    SearchSerializer, UserDeactivationSerializer, UserListSerializer, UserSerializer
+    SearchSerializer, UserDeactivationSerializer, UserListSerializer, UserSerializer,SelfProfileSerializer
 )
 from .custom_permission import IsHeadLibrarian, IsLibrarian, IsPatron
 
@@ -123,3 +125,12 @@ class VerifyTokenView(APIView):
             return Response({"message": "Token is valid"}, status=status.HTTP_200_OK)
         except (InvalidToken, TokenError) as e:
             return Response({"error": str(e)}, status=status.HTTP_401_UNAUTHORIZED)
+        
+class UpdateProfileSelfView(generics.RetrieveUpdateAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = SelfProfileSerializer
+
+    def get_object(self):
+        # Fetch the current logged-in user
+        user = User.objects.get(pk=self.request.user.pk)
+        return user
