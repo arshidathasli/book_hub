@@ -5,6 +5,7 @@ from .views import (SignupView, LoginView, UpdateProfileView, SearchUsersView, D
     )
 
 urlpatterns = [
+    path('', LoginView.as_view(), name='login'),
     path('signup/', SignupView.as_view(), name='signup'),
     path('login/', LoginView.as_view(), name='login'),
     path('update_profile_self/', UpdateProfileSelfView.as_view(), name='update_profile_self'),
